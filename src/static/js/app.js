@@ -4,7 +4,7 @@ function App() {
         <Container>
             <Row>
                 <Col md={{ offset: 3, span: 6 }}>
-                    <h1>Chayapol's To Do List</h1>
+                    <h1>HEIN HTET MOE TUN</h1>
                     <TodoListCard />
                 </Col>
             </Row>
@@ -48,7 +48,7 @@ function TodoListCard() {
         [items],
     );
 
-    if (items === null) return 'Loading...';
+    if (items === null) return 'Fucking...';
 
     return (
         <React.Fragment>
