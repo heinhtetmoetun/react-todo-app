@@ -10,6 +10,7 @@ pipeline {
         DOCKER_HUB_USER = '6530394'
         IMAGE_NAME = 'todo-app'
         DOCKER_HUB_CREDS = 'docker-hub-credentials'
+        DOCKER_CONFIG = "${WORKSPACE}/.docker"
     }
 
     stages {
@@ -29,7 +30,7 @@ pipeline {
         stage('Containerize') {
             steps {
                 sh '''
-                mkdir -p $HOME/.docker
+                mkdir -p $DOCKER_CONFIG
                 docker build -t ${DOCKER_HUB_USER}/${IMAGE_NAME}:latest .
                 '''
             }
@@ -39,7 +40,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: "${DOCKER_HUB_CREDS}", usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                     sh '''
-                    mkdir -p $HOME/.docker
+                    mkdir -p $DOCKER_CONFIG
                     echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
                     docker push ${DOCKER_HUB_USER}/${IMAGE_NAME}:latest
                     '''
